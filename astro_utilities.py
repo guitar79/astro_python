@@ -349,34 +349,17 @@ import numpy as np
 from astropy.io import fits
 from ccdproc import combine
 from datetime import datetime
-
-<<<<<<< HEAD
-=======
 #ModuleNotFoundError: No module named 'ccdproc'
 #conda install -c conda-forge ccdproc
 
->>>>>>> 6ee65f8... add
-def write_log(log_file, log_str):
-    with open(log_file, 'a') as log_f:
-        log_f.write(log_str+'\n')
-    return print (log_str)
 
-#for checking time
-def print_working_time(cht_start_time):
-<<<<<<< HEAD
-    working_time = (datetime.now() - cht_start_time) #total days for downloading
-    return print('working time ::: %s' % (working_time))
 def print_subworking_time(sub_start_time):
-=======
+
     from datetime import datetime
     working_time = (datetime.now() - cht_start_time) #total days for downloading
     return print('working time ::: %s' % (working_time))
 
-def print_subworking_time(sub_start_time):
-    from datetime import datetime
->>>>>>> 6ee65f8... add
-    sub_working_time = (datetime.now() - sub_start_time) #total days for downloading
-    return print('sub_working time ::: %s' % (sub_working_time))
+
 
 def sub_p_solve_field(fullname, save_dir_name, sub_start_time): 
     import subprocess
