@@ -35,21 +35,26 @@ print ("fullnames: {}".format(fullnames))
 #fullname = fullnames[0]
    
 for fullname in fullnames[:]:
-    if fullname[-4:] == ".txt" :
+    if fullname[-4:].lower() == ".txt" :
         os.remove("{}".format(fullname))
-    elif fullname[-4:] == ".fit" and (os.path.isfile('{}'.format(fullname))):
-        print ("Starting...   fullname: {}".format(fullname))
-        new_filename = astro_utilities.get_new_filename(fullname)
-        new_foldername = astro_utilities.get_new_foldername(new_filename)
-        print ("new_filename: {}".format(new_filename))
-        new_foldername = "{}{}".format(destination_base_dir_name, new_foldername)
-        print ("new_foldername: {}".format(new_foldername))
-        
-        if not os.path.exists('{0}'.format(new_foldername)):
-            os.makedirs('{0}'.format(new_foldername))
-            astro_utilities.write_log(log_file, \
-                 '{1} ::: {0} is created'.format(new_foldername, datetime.now()))    
+    elif fullname[-4:].lower() == "xifs" :
+        os.remove("{}".format(fullname))
+    elif fullname[-4:].lower() == ".zip" :
+        os.remove("{}".format(fullname))
+    elif fullname[-4:].lower() == ".fit" and (os.path.isfile('{}'.format(fullname))):
         try :
+            print ("Starting...   fullname: {}".format(fullname))
+            new_filename = astro_utilities.get_new_filename(fullname)
+            new_foldername = astro_utilities.get_new_foldername(new_filename)
+            print ("new_filename: {}".format(new_filename))
+            new_foldername = "{}{}".format(destination_base_dir_name, new_foldername)
+            print ("new_foldername: {}".format(new_foldername))
+            
+            if not os.path.exists('{0}'.format(new_foldername)):
+                os.makedirs('{0}'.format(new_foldername))
+                astro_utilities.write_log(log_file, \
+                     '{1} ::: {0} is created'.format(new_foldername, datetime.now()))    
+        
             if os.path.exists('{0}{1}'.format(new_foldername, new_filename)):
                 astro_utilities.write_log(log_file, 
                      '{0}{1} is already exist...'.format(new_foldername, new_filename))
