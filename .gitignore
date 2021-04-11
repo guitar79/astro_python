@@ -3,3 +3,4 @@ astro_Python_err.log
 astro_Python.log
 get_new_filename.log
 get_new_foldername.log
+*.pyc

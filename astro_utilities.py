@@ -65,9 +65,8 @@ def get_new_filename(fullname, **kargs):
         obs_date = hdul[0].header['DATE-OBS']
     else :
         obs_date = "No-obsdate"
-    obs_date = obs_date.replace(obs_date[10], '-')
-    obs_date = obs_date.replace(obs_date[13], '-')
-    obs_date = obs_date.replace(obs_date[16], '-')
+    obs_date = obs_date.replace("T", "-")
+    obs_date = obs_date.replace(":", '-')
 
     if 'EXPOSURE' in hdul[0].header : 
         esposure = "{:03d}".format(int(hdul[0].header['EXPOSURE']))
