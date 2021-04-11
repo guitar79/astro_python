@@ -33,7 +33,7 @@ for fullname in fullnames[:] :
         print('Starting......\n{0} ...'.format(fullname))
         fullname_el = fullname.split('/')
         foldername_el = fullname_el[-2].split('_')
-        optic_name = foldername_el[-4]
+        optic_name = foldername_el[5]
         #../
         #NEW-fits/
         #FSQ106-x0.73/
