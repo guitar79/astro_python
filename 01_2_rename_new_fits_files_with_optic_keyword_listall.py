@@ -35,11 +35,13 @@ print ("fullnames: {}".format(fullnames))
 #fullname = fullnames[0]
    
 for fullname in fullnames[:]:
-    if fullname[-4:].lower() == ".txt" :
-        os.remove("{}".format(fullname))
-    elif fullname[-4:].lower() == "xifs" :
-        os.remove("{}".format(fullname))
-    elif fullname[-4:].lower() == ".zip" :
+    if fullname[-4:].lower() == ".txt" \
+        or fullname[-4:].lower() == "xisf" \
+        or fullname[-4:].lower() == ".zip" \
+        or fullname[-4:].lower() == ".png" \
+        or fullname[-4:].lower() == ".log" \
+        or fullname[-4:].lower() == "seal" \
+        or fullname[-4:].lower() == "xosm" :
         os.remove("{}".format(fullname))
     elif fullname[-4:].lower() == ".fit" and (os.path.isfile('{}'.format(fullname))):
         try :
@@ -112,7 +114,6 @@ for fullname in fullnames[:]:
             astro_utilities.write_log(err_log_file, \
                      '{2} ::: {0} with move {1} '.format(err, fullname, datetime.now()))
                 
-
 #############################################################################
 #############################################################################
 #############################################################################
