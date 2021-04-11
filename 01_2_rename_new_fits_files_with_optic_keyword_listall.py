@@ -32,7 +32,7 @@ if not os.path.exists('{0}'.format(target_duplicate_files_dir)):
                 
 fullnames = astro_utilities.getFullnameListOfallFiles(base_dir)
 print ("fullnames: {}".format(fullnames))
-#fullname = fullnames[1110]
+#fullname = fullnames[0]
    
 for fullname in fullnames[:]:
     if fullname[-4:] == ".txt" :

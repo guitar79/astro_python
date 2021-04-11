@@ -46,12 +46,11 @@ def get_new_filename(fullname, **kargs):
                 with fits.open('{0}'.format(fullname), mode="append") as hdul1 :
                     hdul1[0].header.append(binning, '2', 'Binning factor in ')
                     hdul1.flush()
-            elif hdul[0].header[binning]  is None :
+            elif hdul[0].header[binning] is None :
                 with fits.open('{0}'.format(fullname), mode="update") as hdul1 :
                     hdul1[0].header[binning] = '2'
                     hdul1.flush()
             hdul[0].header[binning] = '2'
-                
 
         hdul[0].header['INSTRUME'] = 'STX-16803' 
         
