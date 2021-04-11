@@ -35,11 +35,21 @@ alignment_dir_name = 'alignment_Python/'
 #     
 # =============================================================================
 def get_new_filename(fullname, **kargs):
-    log_file = 'get_new_filename.log'
-
     print('Starting get_new_filename ...\n{0}'.format(fullname))
     from astropy.io import fits
     hdul = fits.open(fullname)
+    
+    if hdul[0].header['NAXIS1'] == 2048 \
+        and hdul[0].header['NAXIS2'] == 2048 :
+        hdul[0].header['XBINNING'] = '2'   
+        hdul[0].header['YBINNING'] = '2'    
+        hdul[0].header['INSTRUME'] = 'STX-16803' 
+    if hdul[0].header['NAXIS1'] == 4096 \
+        and hdul[0].header['NAXIS2'] == 4096 :
+        hdul[0].header['XBINNING'] = '1'   
+        hdul[0].header['YBINNING'] = '1'    
+        hdul[0].header['INSTRUME'] = 'STX-16803' 
+        hdul[0].header['TELESCOPE'] = 'RILA600' 
     
     if not 'INSTRUME' in hdul[0].header : 
         instrument = 'UNKNOWN'
@@ -208,9 +218,6 @@ def get_new_filename(fullname, **kargs):
             ccd_temp_el[0],
             xbin)
     hdul.close()
-    write_log(log_file, 
-                    '{1} ::: \nNew file name is {0} ...'\
-                    .format(new_filename, datetime.now()))    
     return new_filename
 
 

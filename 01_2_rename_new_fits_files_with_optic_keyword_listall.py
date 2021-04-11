@@ -27,7 +27,8 @@ destination_base_dir_name = "../CCD_obs_raw/"
 base_dir = "../CCD_new_files/"
 target_duplicate_files_dir = "../CCD_duplicate_files/"
 
-os.makedirs('{0}'.format(target_duplicate_files_dir))
+if not os.path.exists('{0}'.format(target_duplicate_files_dir)):
+    os.makedirs('{0}'.format(target_duplicate_files_dir))
                 
 fullnames = astro_utilities.getFullnameListOfallFiles(base_dir)
 print ("fullnames: {}".format(fullnames))
