@@ -62,9 +62,9 @@ def get_new_filename(fullname, **kargs):
     obs_date = obs_date.replace(obs_date[16], '-')
     
     if 'EXPOSURE' in hdul[0].header : 
-        esposure = hdul[0].header['EXPOSURE']
+        esposure = "{:03d}".format(int(hdul[0].header['EXPOSURE']))
     elif 'EXPTIME' in hdul[0].header : 
-        esposure = hdul[0].header['EXPTIME']
+        esposure = "{:03d}".format(int(hdul[0].header['EXPTIME']))
     else : 
         esposure = 'No_exptime' 
    
@@ -208,7 +208,7 @@ def get_new_foldername(filename):
     filename_el = filename_el1[0].split("_")
     
     if filename_el[1] == 'Bias':
-        new_foldername = '{6}_{8}bin/Cal/-_{3}_-_{1}_{4}_-_{6}_-_{8}bin/'\
+        new_foldername = '{6}_{8}bin/Cal/-_{3}_-_{1}_-_{4}_-_{6}_-_{8}bin/'\
         .format(filename_el[0],
         filename_el[1],
         filename_el[2],
@@ -219,7 +219,7 @@ def get_new_foldername(filename):
         filename_el[7],
         filename_el[8])
     elif filename_el[1] == 'Dark' :
-        new_foldername = '{6}_{8}bin/Cal/-_{3}_-_{1}_{4}_-_{6}_-_{8}bin/'\
+        new_foldername = '{6}_{8}bin/Cal/-_{3}_-_{1}_-_{4}_-_{6}_-_{8}bin/'\
         .format(filename_el[0],
         filename_el[1],
         filename_el[2],
@@ -230,7 +230,7 @@ def get_new_foldername(filename):
         filename_el[7],
         filename_el[8])
     elif filename_el[1] == 'Flat' :
-        new_foldername = '{6}_{8}bin/Cal_{5}/-_{3}_-_{1}_{4}_{5}_{6}_-_{8}bin/'\
+        new_foldername = '{6}_{8}bin/Cal_{5}/-_{3}_-_{1}_-_{5}_{6}_-_{8}bin/'\
         .format(filename_el[0],
         filename_el[1],
         filename_el[2],

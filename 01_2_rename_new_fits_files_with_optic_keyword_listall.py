@@ -30,12 +30,12 @@ target_cuplicate_files_dir = "../CCD_duplicate_files/"
 
 fullnames = astro_utilities.getFullnameListOfallFiles(base_dir)
 print ("fullnames: {}".format(fullnames))
-#fullname = fullnames[0]
+#fullname = fullnames[1110]
    
 for fullname in fullnames[:]:
     if fullname[-4:] == ".txt" :
         os.remove("{}".format(fullname))
-    elif fullname[-4:] == ".fit" :
+    elif fullname[-4:] == ".fit" and (os.path.isfile('{}'.format(fullname))):
         print ("Starting...   fullname: {}".format(fullname))
         new_filename = astro_utilities.get_new_filename(fullname)
         new_foldername = astro_utilities.get_new_foldername(new_filename)
@@ -59,9 +59,9 @@ for fullname in fullnames[:]:
                 astro_utilities.write_log(log_file, \
                          '{0} is moved to {1}{2}'.format(fullname, new_foldername, new_filename))
                 fits.setval('{0}{1}'.format(new_foldername, new_filename), \
-                        'NOTES', value='created by guitar79@naver.com')
-                fits.setval('{0}{1}'.format(new_foldername, new_filename), \
-                        'observer', value='Kiehyun Park')
+                        'NOTES', value='modified by guitar79@naver.com')
+                #fits.setval('{0}{1}'.format(new_foldername, new_filename), \
+                #        'observer', value='Kiehyun Park')
                 
                 hdul = fits.open("{0}{1}".format(new_foldername, new_filename))
                 
