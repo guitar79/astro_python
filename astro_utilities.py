@@ -32,56 +32,22 @@ def get_new_filename(fullname, **kargs):
     log_file = 'get_new_filename.log'
 
     print('Starting get_new_filename ...\n{0}'.format(fullname))
-    
+    from astropy.io import fits
     hdul = fits.open(fullname)
     
-    if hdul[0].header['NAXIS1'] == 2048 \
-        and hdul[0].header['NAXIS2'] == 2048 :
-        hdul[0].header['XBINNING'] = '2'   
-        hdul[0].header['YBINNING'] = '2'    
-        hdul[0].header['INSTRUME'] = 'STX-16803' 
-    if hdul[0].header['NAXIS1'] == 4096 \
-        and hdul[0].header['NAXIS2'] == 4096 :
-        hdul[0].header['XBINNING'] = '1'   
-        hdul[0].header['YBINNING'] = '1'    
-        hdul[0].header['INSTRUME'] = 'STX-16803' 
-        hdul[0].header['TELESCOPE'] = 'RILA600' 
-    '''
-    if hdul[0].header['NAXIS1'] == 3326 \
-        and hdul[0].header['NAXIS2'] == 2504 :
-        hdul[0].header['XBINNING'] = '1'   
-        hdul[0].header['YBINNING'] = '1'    
-        hdul[0].header['INSTRUME'] = 'QSI683ws' 
-    if hdul[0].header['NAXIS1'] == 2504 \
-        and hdul[0].header['NAXIS2'] == 3326 :
-        hdul[0].header['XBINNING'] = '1'   
-        hdul[0].header['YBINNING'] = '1'    
-        hdul[0].header['INSTRUME'] = 'QSI683ws' 
-    if hdul[0].header['NAXIS1'] == 3352 \
-        and hdul[0].header['NAXIS2'] == 2532 :
-        hdul[0].header['XBINNING'] = '1'   
-        hdul[0].header['YBINNING'] = '1'    
-        hdul[0].header['INSTRUME'] = 'STF-8300M' 
-    if hdul[0].header['NAXIS1'] == 2532 \
-        and hdul[0].header['NAXIS2'] == 3352 :
-        hdul[0].header['XBINNING'] = '1'   
-        hdul[0].header['YBINNING'] = '1'    
-        hdul[0].header['INSTRUME'] = 'STF-8300M' 
-    '''
     if not 'INSTRUME' in hdul[0].header : 
-        instrument = 'NONE'
-    elif "8300" in hdul[0].header['INSTRUME'] : 
-        instrument = 'STF-8300M'
-    elif "683" in hdul[0].header['INSTRUME'] : 
+        instrument = 'UNKNOWN'
+    elif  'qsi' in hdul[0].header['INSTRUME'].lower() :     
         instrument = 'QSI683ws'
-    elif "QSI" in hdul[0].header['INSTRUME'] : 
-        instrument = 'QSI683ws'
-    elif "STL-11000" in hdul[0].header['INSTRUME'] : 
+    elif  'st-8300' in hdul[0].header['INSTRUME'].lower() :     
+        instrument = 'ST-8300'
+    elif  'stf-8300' in hdul[0].header['INSTRUME'].lower() :     
+        instrument = 'STF-8300'
+    elif  'stl-11000' in hdul[0].header['INSTRUME'].lower() :     
         instrument = 'STL-11000'
     else :
         instrument = hdul[0].header['INSTRUME']
-    #'QSI 683ws S/N 00602553 HW 10.00.00 FW 06.03.01 PI 7.4.1824.0'    
-    #'SBIG STF-8300 CCD Camera'
+    instrument = instrument.replace(" ","+")
     
     if 'CCD-TEMP' in hdul[0].header :     
         ccd_temp_el = str(hdul[0].header['CCD-TEMP']).split('.')
@@ -100,8 +66,7 @@ def get_new_filename(fullname, **kargs):
     elif 'EXPTIME' in hdul[0].header : 
         esposure = hdul[0].header['EXPTIME']
     else : 
-        esposure = 'No_exptime'
-    
+        esposure = 'No_exptime' 
    
     if not 'OBJECT' in hdul[0].header : 
         object_name = '-'
@@ -218,7 +183,7 @@ def get_new_filename(fullname, **kargs):
     else :
         optic = hdul[0].header['OPTIC']
         
-    new_filename = '{0}_{1}_{2}_{3}_{4}sec_{5}_{6}_{7}C_{8}x{9}bin.fit'\
+    new_filename = '{0}_{1}_{2}_{3}_{4}sec_{5}_{6}_{7}C_{8}bin.fit'\
         .format(object_name,
             image_type,
             filter_name,
@@ -227,8 +192,7 @@ def get_new_filename(fullname, **kargs):
             optic,
             instrument,
             ccd_temp_el[0],
-            xbin,
-            ybin)
+            xbin)
     hdul.close()
     write_log(log_file, 
                     '{1} ::: \nNew file name is {0} ...'\
@@ -244,7 +208,7 @@ def get_new_foldername(filename):
     filename_el = filename_el1[0].split("_")
     
     if filename_el[1] == 'Bias':
-        new_foldername = '-_{1}_-_-_-_-_{6}_-_{8}bin/-_{1}_-_{3}_-_-_{6}_-_{8}bin/'\
+        new_foldername = '{6}_{8}bin/Cal/-_{3}_-_{1}_{4}_-_{6}_-_{8}bin/'\
         .format(filename_el[0],
         filename_el[1],
         filename_el[2],
@@ -255,7 +219,18 @@ def get_new_foldername(filename):
         filename_el[7],
         filename_el[8])
     elif filename_el[1] == 'Dark' :
-        new_foldername = '-_{1}_-_-_-_-_{6}_-_{8}bin/-_{1}_-_{3}_{4}_-_{6}_-_{8}bin/'\
+        new_foldername = '{6}_{8}bin/Cal/-_{3}_-_{1}_{4}_-_{6}_-_{8}bin/'\
+        .format(filename_el[0],
+        filename_el[1],
+        filename_el[2],
+        filename_el[3][:10],
+        filename_el[4],
+        filename_el[5],
+        filename_el[6],
+        filename_el[7],
+        filename_el[8])
+    elif filename_el[1] == 'Flat' :
+        new_foldername = '{6}_{8}bin/Cal_{5}/-_{3}_-_{1}_{4}_{5}_{6}_-_{8}bin/'\
         .format(filename_el[0],
         filename_el[1],
         filename_el[2],
@@ -266,7 +241,7 @@ def get_new_foldername(filename):
         filename_el[7],
         filename_el[8])
     else : 
-        new_foldername = '-_{1}_-_-_-_{5}_{6}_-_{8}bin/{0}_{1}_-_{3}_-_{5}_{6}_-_{8}bin/'\
+        new_foldername = '{6}_{8}bin/Light_{5}/{0}_{1}_-_{3}_-_{5}_{6}_-_{8}bin/'\
         .format(filename_el[0],
         filename_el[1],
         filename_el[2],

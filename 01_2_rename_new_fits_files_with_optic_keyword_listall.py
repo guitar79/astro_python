@@ -22,10 +22,7 @@ master_file_dir_name = 'master_file_Python/'
 processing_dir_name = 'processing_Python/'
 integration_dir_name = 'integration_Python/'
 alignment_dir_name = 'alignment_Python/'
-<<<<<<< HEAD
 
-destination_base_dir_name = "../CCD_obs_raw/"
-=======
 destination_base_dir_name = "../CCD_obs_raw/"
 base_dir = "../CCD_new_files/"
 target_cuplicate_files_dir = "../CCD_duplicate_files/"
@@ -33,9 +30,12 @@ target_cuplicate_files_dir = "../CCD_duplicate_files/"
 
 fullnames = astro_utilities.getFullnameListOfallFiles(base_dir)
 print ("fullnames: {}".format(fullnames))
+#fullname = fullnames[0]
    
 for fullname in fullnames[:]:
-    if fullname[-4:] == ".fit" :
+    if fullname[-4:] == ".txt" :
+        os.remove("{}".format(fullname))
+    elif fullname[-4:] == ".fit" :
         print ("Starting...   fullname: {}".format(fullname))
         new_filename = astro_utilities.get_new_filename(fullname)
         new_foldername = astro_utilities.get_new_foldername(new_filename)
