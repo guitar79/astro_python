@@ -6,3 +6,4 @@ get_new_foldername.log
 *.pyc
 *.pyc
 *.pyc
+.spyproject/config/workspace.ini
