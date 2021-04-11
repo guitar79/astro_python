@@ -61,8 +61,10 @@ def get_new_filename(fullname, **kargs):
         ccd_temp_el = 'NAN'
     if 'TIME-OBS' in hdul[0].header : 
         obs_date  = hdul[0].header['DATE-OBS']+'-'+hdul[0].header['TIME-OBS']
-    else :     
+    elif 'DATE-OBS' in hdul[0].header :
         obs_date = hdul[0].header['DATE-OBS']
+    else :
+        obs_date = "No-obsdate"
     obs_date = obs_date.replace(obs_date[10], '-')
     obs_date = obs_date.replace(obs_date[13], '-')
     obs_date = obs_date.replace(obs_date[16], '-')
