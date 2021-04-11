@@ -124,4 +124,4 @@ for fullname in fullnames[:] :
     if len(os.listdir(fullname)) == 0 :
         shutil.rmtree(r"{}".format(fullname)) # Delete..
         print ("rmtree {}\n".format(fullname))
-        
+    
