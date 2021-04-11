@@ -114,8 +114,15 @@ def get_new_filename(fullname, **kargs):
     
     if not 'IMAGETYP' in hdul[0].header : 
         image_type = '-'
-        filter_name = hdul[0].header['FILTER'] 
-        object_name = hdul[0].header['OBJECT']   
+        if 'FILTER' in hdul[0].header:
+            filter_name = hdul[0].header['FILTER']
+        else :
+            filter_name = "-"
+
+        if 'OBJECT' in hdul[0].header:
+            object_name = hdul[0].header['OBJECT']
+        else:
+            object_name = "-"
     elif hdul[0].header['IMAGETYP'][0:1] == 'B' \
         or hdul[0].header['IMAGETYP'][0:1] == 'b' \
         or hdul[0].header['IMAGETYP'][0:1] == 'z':
