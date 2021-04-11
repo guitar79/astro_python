@@ -17,7 +17,10 @@ def write_log(log_file, log_str):
     with open(log_file, 'a') as log_f:
         log_f.write("{}, {}\n".format(os.path.basename(__file__), log_str))
     return print ("{}, {}\n".format(os.path.basename(__file__), log_str))
-#for checking time
+
+# =============================================================================
+# for checking time
+# =============================================================================
 cht_start_time = datetime.now()
 def print_working_time(cht_start_time):
     working_time = (datetime.now() - cht_start_time) #total days for downloading
@@ -28,6 +31,9 @@ processing_dir_name = 'processing_Python/'
 integration_dir_name = 'integration_Python/'
 alignment_dir_name = 'alignment_Python/'
 
+# =============================================================================
+#     
+# =============================================================================
 def get_new_filename(fullname, **kargs):
     log_file = 'get_new_filename.log'
 
@@ -60,7 +66,7 @@ def get_new_filename(fullname, **kargs):
     obs_date = obs_date.replace(obs_date[10], '-')
     obs_date = obs_date.replace(obs_date[13], '-')
     obs_date = obs_date.replace(obs_date[16], '-')
-    
+
     if 'EXPOSURE' in hdul[0].header : 
         esposure = "{:03d}".format(int(hdul[0].header['EXPOSURE']))
     elif 'EXPTIME' in hdul[0].header : 
