@@ -5,3 +5,4 @@ get_new_filename.log
 get_new_foldername.log
 *.pyc
 *.pyc
+*.pyc

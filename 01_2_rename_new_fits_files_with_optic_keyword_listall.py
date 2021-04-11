@@ -25,9 +25,10 @@ alignment_dir_name = 'alignment_Python/'
 
 destination_base_dir_name = "../CCD_obs_raw/"
 base_dir = "../CCD_new_files/"
-target_cuplicate_files_dir = "../CCD_duplicate_files/"
+target_duplicate_files_dir = "../CCD_duplicate_files/"
 
-
+os.makedirs('{0}'.format(target_duplicate_files_dir))
+                
 fullnames = astro_utilities.getFullnameListOfallFiles(base_dir)
 print ("fullnames: {}".format(fullnames))
 #fullname = fullnames[1110]
@@ -51,8 +52,8 @@ for fullname in fullnames[:]:
             if os.path.exists('{0}{1}'.format(new_foldername, new_filename)):
                 astro_utilities.write_log(log_file, 
                      '{0}{1} is already exist...'.format(new_foldername, new_filename))
-                shutil.move(r"{}".format(fullname), r"{}{}".format(target_cuplicate_files_dir, new_filename))
-                print ("move {}".format(fullname), "{}{}".format(target_cuplicate_files_dir, new_filename))
+                shutil.move(r"{}".format(fullname), r"{}{}".format(target_duplicate_files_dir, new_filename))
+                print ("move {}".format(fullname), "{}{}".format(target_duplicate_files_dir, new_filename))
                     
             else : 
                 os.rename(fullname, '{0}{1}'.format(new_foldername, new_filename))
@@ -109,19 +110,18 @@ for fullname in fullnames[:]:
 #############################################################################
 #############################################################################
 #############################################################################
-fullnames = astro_utilities.getFullnameListOfallsubDirs(base_dir)
-print ("fullnames: {}".format(fullnames))
-
 import shutil 
-
-for fullname in fullnames[:] :
-    fullname_el = fullname.split("/")
-    if fullname_el[-1] == master_file_dir_name[:-1] : 
-        #shutil.rmtree(r"{}".format(fullname))
-        print ("rmtree {}\n".format(fullname))
-
-    # Check is empty..
-    if len(os.listdir(fullname)) == 0 :
-        shutil.rmtree(r"{}".format(fullname)) # Delete..
-        print ("rmtree {}\n".format(fullname))
+for i in range(4) : 
+    fullnames = astro_utilities.getFullnameListOfallsubDirs(base_dir)
+    print ("fullnames: {}".format(fullnames))
     
+    for fullname in fullnames[:] :
+        fullname_el = fullname.split("/")
+        if fullname_el[-1] == master_file_dir_name[:-1] : 
+            #shutil.rmtree(r"{}".format(fullname))
+            print ("rmtree {}\n".format(fullname))
+    
+        # Check is empty..
+        if len(os.listdir(fullname)) == 0 :
+            shutil.rmtree(r"{}".format(fullname)) # Delete..
+            print ("rmtree {}\n".format(fullname))
