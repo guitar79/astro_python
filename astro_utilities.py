@@ -41,15 +41,35 @@ def get_new_filename(fullname, **kargs):
     
     if hdul[0].header['NAXIS1'] == 2048 \
         and hdul[0].header['NAXIS2'] == 2048 :
-        hdul[0].header['XBINNING'] = '2'   
-        hdul[0].header['YBINNING'] = '2'    
+        for binning in ['XBINNING', 'YBINNING'] :
+            if not binning in hdul[0].header :
+                with fits.open('{0}'.format(fullname), mode="append") as hdul1 :
+                    hdul1[0].header.append(binning, '2', 'Binning factor in ')
+                    hdul1.flush()
+            elif hdul[0].header[binning]  is None :
+                with fits.open('{0}'.format(fullname), mode="update") as hdul1 :
+                    hdul1[0].header[binning] = '2'
+                    hdul1.flush()
+            hdul[0].header[binning] = '2'
+                
+
         hdul[0].header['INSTRUME'] = 'STX-16803' 
+        
     if hdul[0].header['NAXIS1'] == 4096 \
         and hdul[0].header['NAXIS2'] == 4096 :
-        hdul[0].header['XBINNING'] = '1'   
-        hdul[0].header['YBINNING'] = '1'    
+        for binning in ['XBINNING', 'YBINNING'] :
+            if not binning in hdul[0].header :
+                with fits.open('{0}'.format(fullname), mode="append") as hdul1 :
+                    hdul1[0].header.append(binning, '1', 'Binning factor in ')
+                    hdul1.flush()
+            elif hdul[0].header[binning]  is None :
+                with fits.open('{0}'.format(fullname), mode="update") as hdul1 :
+                    hdul1[0].header[binning] = '1'
+                    hdul1.flush()
+            hdul[0].header[binning] = '1'
+                
         hdul[0].header['INSTRUME'] = 'STX-16803' 
-        hdul[0].header['TELESCOPE'] = 'RILA600' 
+        #hdul[0].header['TELESCOPE'] = 'RILA600' 
     
     if not 'INSTRUME' in hdul[0].header : 
         instrument = 'UNKNOWN'
