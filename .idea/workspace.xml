@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="772ce306-e99e-4a15-9c49-3fe657847e1e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/01_2_rename_new_fits_files_with_optic_keyword_listall.py" beforeDir="false" afterPath="$PROJECT_DIR$/01_2_rename_new_fits_files_with_optic_keyword_listall.py" afterDir="false" />
-    </list>
+    <list default="true" id="772ce306-e99e-4a15-9c49-3fe657847e1e" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -92,6 +89,7 @@
       <workItem from="1618068689315" duration="170000" />
       <workItem from="1618112707962" duration="1273000" />
       <workItem from="1618114011037" duration="2968000" />
+      <workItem from="1618143895771" duration="7000" />
     </task>
     <task id="LOCAL-00001" summary="a">
       <created>1618066859079</created>

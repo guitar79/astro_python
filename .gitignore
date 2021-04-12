@@ -8,3 +8,4 @@ get_new_foldername.log
 *.pyc
 .spyproject/config/workspace.ini
 *.bak
+*.xml

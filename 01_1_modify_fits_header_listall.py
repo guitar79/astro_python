@@ -28,7 +28,7 @@ print ("fullnames: {}".format(fullnames))
     
 for fullname in fullnames[:] :
 #fullname = fullnames[0]
-    if fullname[-4:] == ".fit" :
+    if fullname[-4:] == ".fit" or fullname[-4:] == ".new" :
         print('#'*60)
         print('Starting......\n{0} ...'.format(fullname))
         fullname_el = fullname.split('/')
