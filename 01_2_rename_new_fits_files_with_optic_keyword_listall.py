@@ -43,7 +43,8 @@ for fullname in fullnames[:]:
         or fullname[-4:].lower() == "seal" \
         or fullname[-4:].lower() == "xosm" :
         os.remove("{}".format(fullname))
-    elif fullname[-4:].lower() == ".fit" and (os.path.isfile('{}'.format(fullname))):
+    elif (fullname[-4:].lower() == ".fit" or fullname[-4:].lower() == "fits") \
+        and (os.path.isfile('{}'.format(fullname))):
         try :
             print ("Starting...   fullname: {}".format(fullname))
             new_filename = astro_utilities.get_new_filename(fullname)

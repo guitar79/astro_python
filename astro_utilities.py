@@ -53,6 +53,8 @@ def get_new_filename(fullname, **kargs):
             hdul[0].header[binning] = '2'
 
         hdul[0].header['INSTRUME'] = 'STX-16803' 
+        hdul[0].header['TELESCOPE'] = 'RiLA600' 
+        hdul[0].header['OPTIC'] = 'RiLA600' 
         
     if hdul[0].header['NAXIS1'] == 4096 \
         and hdul[0].header['NAXIS2'] == 4096 :
@@ -68,7 +70,8 @@ def get_new_filename(fullname, **kargs):
             hdul[0].header[binning] = '1'
                 
         hdul[0].header['INSTRUME'] = 'STX-16803' 
-        #hdul[0].header['TELESCOPE'] = 'RILA600' 
+        hdul[0].header['TELESCOPE'] = 'RiLA600' 
+        hdul[0].header['OPTIC'] = 'RiLA600' 
     
     if not 'INSTRUME' in hdul[0].header : 
         instrument = 'UNKNOWN'
