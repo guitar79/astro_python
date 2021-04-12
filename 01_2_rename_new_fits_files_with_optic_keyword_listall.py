@@ -41,6 +41,7 @@ for fullname in fullnames[:]:
         or fullname[-4:].lower() == ".png" \
         or fullname[-4:].lower() == ".log" \
         or fullname[-4:].lower() == "seal" \
+        or fullname[-4:].lower() == "tiff" \
         or fullname[-4:].lower() == "xosm" :
         os.remove("{}".format(fullname))
     elif (fullname[-4:].lower() == ".fit" or fullname[-4:].lower() == "fits") \
