@@ -205,7 +205,14 @@ def get_new_filename(fullname, **kargs):
     else : 
         xbin = hdul[0].header['XBINNING']
         ybin = hdul[0].header['YBINNING']
-            
+
+    if isinstance(xbin, float) : 
+        xbin = int(xbin)
+        xbin = str(xbin)
+    if isinstance(ybin, float) : 
+        xbin = int(ybin)
+        xbin = str(ybin)
+        
     object_name = object_name.replace('_', '-')
     object_name = object_name.replace('ngc', 'NGC')
     object_name = object_name.replace('ic', 'IC')
