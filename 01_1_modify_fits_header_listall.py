@@ -33,6 +33,7 @@ for fullname in fullnames[:] :
         print('Starting......\n{0} ...'.format(fullname))
         fullname_el = fullname.split('/')
         foldername_el = fullname_el[-2].split('_')
+        object_name = foldername_el[1]
         optic_name = foldername_el[5]
         #../
         #NEW-fits/
@@ -47,6 +48,14 @@ for fullname in fullnames[:] :
                     hdul[0].header.append('OPTIC', 
                                        '{0}'.format(optic_name), 
                                        'OPTIC information')
+                    astro_utilities.write_log(log_file, 
+                        '{1} ::: OPTIC information is appended at {0}...'\
+                        .format(fullname, datetime.now()))
+            with fits.open('{0}'.format(fullname), mode="append") as hdul :
+                if not 'OBJECT' in hdul[0].header :
+                    hdul[0].header.append('OBJECT', 
+                                       '{0}'.format(object_name), 
+                                       'OBJECT information')
                     astro_utilities.write_log(log_file, 
                         '{1} ::: OPTIC information is appended at {0}...'\
                         .format(fullname, datetime.now()))
@@ -70,6 +79,26 @@ for fullname in fullnames[:] :
                 hdul[0].header.append('COMMENT', 
                                        'add HEADER OPTIC {0}'.format(optic_name), 
                                        'add HEADER OPTIC {0}'.format(optic_name))
+                
+                # Change something in hdul.
+                if not hdul[0].header['OBJECT'] : 
+                    hdul[0].header['OBJECT'] = '{0}'.format(object_name)
+                    astro_utilities.write_log(log_file, 
+                        '{1} ::: OBJECT information is modified at {0}...'\
+                        .format(fullname, datetime.now()))
+                elif not '{0}'.format(object_name).lower() in hdul[0].header['OBJECT'].lower() : 
+                    hdul[0].header['OBJECT'] = '{0}'.format(object_name)
+                    astro_utilities.write_log(log_file, 
+                        '{1} ::: OBJECT information is modified at {0}...'\
+                        .format(fullname, datetime.now()))
+                else : 
+                    hdul[0].header['OBJECT'] = '{0}'.format(object_name)
+                    astro_utilities.write_log(log_file, 
+                        '{1} ::: OBJECT information is modified at {0}...'\
+                        .format(fullname, datetime.now()))
+                hdul[0].header.append('COMMENT', 
+                                       'add HEADER OBJECT {0}'.format(object_name), 
+                                       'add HEADER OBJECT {0}'.format(object_name))
                 
                 if not 'FLIPSTAT' in hdul[0].header :
                     print ("There is no 'FLIPSTAT' in the file")
