@@ -24,11 +24,16 @@ integration_dir_name = 'integration_Python/'
 alignment_dir_name = 'alignment_Python/'
 
 destination_base_dir_name = "../CCD_obs_raw/"
+solved_base_dir_name = "../CCD_obs_solved/"
 base_dir = "../CCD_new_files/"
 target_duplicate_files_dir = "../CCD_duplicate_files/"
 
 if not os.path.exists('{0}'.format(target_duplicate_files_dir)):
     os.makedirs('{0}'.format(target_duplicate_files_dir))
+if not os.path.exists('{0}'.format(solved_base_dir_name)):
+    os.makedirs('{0}'.format(solved_base_dir_name))
+if not os.path.exists('{0}'.format(destination_base_dir_name)):
+    os.makedirs('{0}'.format(destination_base_dir_name))
                 
 fullnames = astro_utilities.getFullnameListOfallFiles(base_dir)
 print ("fullnames: {}".format(fullnames))
@@ -44,6 +49,7 @@ for fullname in fullnames[:]:
         or fullname[-4:].lower() == "tiff" \
         or fullname[-4:].lower() == "xosm" :
         os.remove("{}".format(fullname))
+    
     elif (fullname[-4:].lower() == ".fit" or fullname[-4:].lower() == "fits") \
         and (os.path.isfile('{}'.format(fullname))):
         try :
@@ -110,11 +116,11 @@ for fullname in fullnames[:]:
                 astro_utilities.write_log(log_file, \
                      '{3} ::: {0} is moved to {1}{2} ...'\
                          .format(fullname, new_foldername, new_filename, datetime.now()))
-        
         except Exception as err :
             print("X"*60)
             astro_utilities.write_log(err_log_file, \
                      '{2} ::: {0} with move {1} '.format(err, fullname, datetime.now()))
+    
                 
 #############################################################################
 #############################################################################
