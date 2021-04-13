@@ -24,7 +24,6 @@ integration_dir_name = 'integration_Python/'
 alignment_dir_name = 'alignment_Python/'
 
 base_dir = "../CCD_new_files/"
-destination_base_dir_name = "../CCD_obs_raw/"
 wcs_one_dir_name = "../CCD_wcs_one/"
 target_duplicate_files_dir = "../CCD_duplicate_files/"
 
@@ -32,8 +31,7 @@ if not os.path.exists('{0}'.format(target_duplicate_files_dir)):
     os.makedirs('{0}'.format(target_duplicate_files_dir))
 if not os.path.exists('{0}'.format(wcs_one_dir_name)):
     os.makedirs('{0}'.format(wcs_one_dir_name))
-if not os.path.exists('{0}'.format(destination_base_dir_name)):
-    os.makedirs('{0}'.format(destination_base_dir_name))
+
                 
 fullnames = astro_utilities.getFullnameListOfallFiles(base_dir)
 print ("fullnames: {}".format(fullnames))
@@ -87,31 +85,6 @@ for fullname in fullnames[:]:
                 fits_info = fits_info1.replace("'", "'\'")
                 print("fits_info: {}".format(fits_info))
                 
-                '''
-                #insert MariaDB
-                conn = astro_utilities.connectMariaDB()
-                cur = conn.cursor()
-                tb_name = 'raw_file_info'
-                remarks = ''
-                cur.execute("INSERT INTO `{0}`\
-                             (`ID`, `fullname`, `fits_info`, `REMARKs`) \
-                             VALUES (NULL, '{1}{2}', '{3}', '{4}');"\
-                             .format(tb_name, new_foldername, new_filename, fits_info, remarks))
-                
-                result = cur.fetchall()
-                conn.commit()
-                print("excute conn.commit()")
-    
-                cur.close()
-                print("cur.close()")
-                '''
-                '''
-                SELECT * FROM `raw_file_info` WHERE `fullname` LIKE 'aaa%'
-                INSERT INTO `raw_file_info` (`ID`, `fullname`, `fits_info`, `REMARKs`) VALUES (NULL, 'aaa/aa.fit', 'fits...', 'fits... remarks');
-                '''
-                
-                #fits.setval('{0}{1}{2}'.format(base_dir, new_foldername, new_filename), \
-                #        'IMAGETYP', value='Light frame')
                 print("*"*60)
                 astro_utilities.write_log(log_file, \
                      '{3} ::: {0} is moved to {1}{2} ...'\

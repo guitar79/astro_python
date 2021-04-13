@@ -210,8 +210,8 @@ def get_new_filename(fullname, **kargs):
         xbin = int(xbin)
         xbin = str(xbin)
     if isinstance(ybin, float) : 
-        xbin = int(ybin)
-        xbin = str(ybin)
+        ybin = int(ybin)
+        ybin = str(ybin)
         
     object_name = object_name.replace('_', '-')
     object_name = object_name.replace('ngc', 'NGC')
