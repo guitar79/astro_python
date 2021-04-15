@@ -91,8 +91,9 @@ def get_new_filename(fullname, **kargs):
         ccd_temp_el = str(hdul[0].header['CCD-TEMP']).split('.')
     else : 
         ccd_temp_el = 'NAN'
+    
     if 'TIME-OBS' in hdul[0].header : 
-        obs_date  = hdul[0].header['DATE-OBS']+'-'+hdul[0].header['TIME-OBS']
+        obs_date  = hdul[0].header['DATE-OBS'][:10]+'-'+hdul[0].header['TIME-OBS']
     elif 'DATE-OBS' in hdul[0].header :
         obs_date = hdul[0].header['DATE-OBS']
     else :
@@ -212,7 +213,14 @@ def get_new_filename(fullname, **kargs):
     if isinstance(ybin, float) : 
         ybin = int(ybin)
         ybin = str(ybin)
-        
+    
+    if not 'CTYPE1' in hdul[0].header \
+        or not 'CTYPE2' in hdul[0].header : 
+        wcs = "-"
+    elif hdul[0].header['CTYPE1'] == 'RA---TAN' \
+        and hdul[0].header['CTYPE2'] == 'DEC--TAN':
+        wcs = "wcs"
+    
     object_name = object_name.replace('_', '-')
     object_name = object_name.replace('ngc', 'NGC')
     object_name = object_name.replace('ic', 'IC')
@@ -236,7 +244,7 @@ def get_new_filename(fullname, **kargs):
     else :
         optic = hdul[0].header['OPTIC']
         
-    new_filename = '{0}_{1}_{2}_{3}_{4}sec_{5}_{6}_{7}C_{8}bin.fit'\
+    new_filename = '{0}_{1}_{2}_{3}_{4}sec_{5}_{6}_{7}C_{8}bin_{9}.fit'\
         .format(object_name,
             image_type,
             filter_name,
@@ -245,7 +253,8 @@ def get_new_filename(fullname, **kargs):
             optic,
             instrument,
             ccd_temp_el[0],
-            xbin)
+            xbin,
+            wcs)
     hdul.close()
     return new_filename
 
