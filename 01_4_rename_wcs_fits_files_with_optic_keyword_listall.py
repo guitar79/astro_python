@@ -38,7 +38,7 @@ if not os.path.exists('{0}'.format(destination_base_dir_name)):
                 
 fullnames = astro_utilities.getFullnameListOfallFiles(base_dir)
 print ("fullnames: {}".format(fullnames))
-#fullname = fullnames[0]
+#fullname = fullnames[10]
    
 for fullname in fullnames[:]:
     if fullname[-4:].lower() == ".txt" \
@@ -51,7 +51,9 @@ for fullname in fullnames[:]:
         or fullname[-4:].lower() == "xosm" :
         os.remove("{}".format(fullname))
     
-    elif fullname[-4:].lower() == ".fit" and os.path.isfile('{}'.format(fullname)):
+    elif (fullname[-4:].lower() == ".fit" or fullname[-4:].lower() == "fits")\
+          and os.path.isfile('{}'.format(fullname)):
+        
         try :
             print ("Starting...   fullname: {}".format(fullname))
             new_filename = astro_utilities.get_new_filename(fullname)
@@ -65,52 +67,78 @@ for fullname in fullnames[:]:
                 astro_utilities.write_log(log_file, \
                      '{1} ::: {0} is created'.format(new_foldername, datetime.now()))    
         
-            if os.path.exists('{0}{1}'.format(new_foldername, new_filename)):
-                astro_utilities.write_log(log_file, 
-                     '{0}{1} is already exist...'.format(new_foldername, new_filename))
-                shutil.move(r"{}".format(fullname), r"{}{}".format(target_duplicate_files_dir, new_filename))
-                print ("move {}".format(fullname), "{}{}".format(target_duplicate_files_dir, new_filename))
-            
-            if new_filename[-8:].lower() == "_wcs.fit" \
-                and os.path.exists('{0}{1}_-.fit'.format(new_foldername, new_filename[:-8])):
-                shutil.move(r'{0}{1}_-.fit'.format(new_foldername, new_filename[:-8]), \
-                            r"{0}{1}_-.fit".format(target_duplicate_files_dir, new_filename[:-8]))
-                os.rename(fullname, '{0}{1}'.format(new_foldername, new_filename))
-                astro_utilities.write_log(log_file, 
-                     '{0}{1}_-.fit is move to already exist...'.format(new_foldername, new_filename))
+            if new_filename[-6:].lower() == "_-.fit" :
+                if os.path.exists('{0}{1}_wcs.fit'.format(new_foldername, new_filename[:-6])):
+                    astro_utilities.write_log(log_file, 
+                         '{0}{1}_wcs.fit is already exist...'.format(new_foldername, new_filename))
+                    shutil.move(r"{}".format(fullname), r"{}{}".format(target_duplicate_files_dir, new_filename))
+                    print ("move {}".format(fullname), "{}{}".format(target_duplicate_files_dir, new_filename))
+                else : 
+                    os.rename(fullname, '{0}{1}'.format(new_foldername, new_filename))
+                    astro_utilities.write_log(log_file, \
+                             '{0} is moved to {1}{2}'.format(fullname, new_foldername, new_filename))
+                    fits.setval('{0}{1}'.format(new_foldername, new_filename), \
+                            'NOTES', value='modified by guitar79@naver.com')
+                    #fits.setval('{0}{1}'.format(new_foldername, new_filename), \
+                    #        'observer', value='Kiehyun Park')
                     
-            elif new_filename[-6:].lower() == "_-.fit" \
-                and os.path.exists('{0}{1}_wcs.fit'.format(new_foldername, new_filename[:-6])):
-                astro_utilities.write_log(log_file, 
-                     '{0}{1}_wcs.fit is already exist...'.format(new_foldername, new_filename))
-                shutil.move(r"{}".format(fullname), r"{}{}".format(target_duplicate_files_dir, new_filename))
-                print ("move {}".format(fullname), "{}{}".format(target_duplicate_files_dir, new_filename))
+                    hdul = fits.open("{0}{1}".format(new_foldername, new_filename))
                     
-            else : 
+                    print("hdul[0].header.tostring: {}".format(hdul[0].header.tostring))
+                    fits_info1 = hdul[0].header.tostring()
+                    fits_info = fits_info1.replace("'", "'\'")
+                    print("fits_info: {}".format(fits_info))
+                    print("*"*60)
+                    astro_utilities.write_log(log_file, \
+                         '{1} ::: {0} fits info modified ...'\
+                             .format(fullname, datetime.now()))
+                    
+            elif new_filename[-8:].lower() == "_wcs.fit" : 
+                if os.path.exists('{0}{1}_-.fit'.format(new_foldername, new_filename[:-8])):
+                    shutil.move(r'{0}{1}_-.fit'.format(new_foldername, new_filename[:-8]), \
+                                r"{0}{1}_-.fit".format(target_duplicate_files_dir, new_filename[:-8]))
                 os.rename(fullname, '{0}{1}'.format(new_foldername, new_filename))
                 astro_utilities.write_log(log_file, \
-                         '{0} is moved to {1}{2}'.format(fullname, new_foldername, new_filename))
+                    '{0} is moved to {1}{2}'.format(fullname, new_foldername, new_filename))
                 fits.setval('{0}{1}'.format(new_foldername, new_filename), \
-                        'NOTES', value='modified by guitar79@naver.com')
-                #fits.setval('{0}{1}'.format(new_foldername, new_filename), \
-                #        'observer', value='Kiehyun Park')
-                
+                            'NOTES', value='modified by guitar79@naver.com')
+                    
                 hdul = fits.open("{0}{1}".format(new_foldername, new_filename))
-                
                 print("hdul[0].header.tostring: {}".format(hdul[0].header.tostring))
                 fits_info1 = hdul[0].header.tostring()
                 fits_info = fits_info1.replace("'", "'\'")
                 print("fits_info: {}".format(fits_info))
                 print("*"*60)
                 astro_utilities.write_log(log_file, \
-                     '{1} ::: {0} fits info modified ...'\
-                         .format(fullname, datetime.now()))
+                    '{1} ::: {0} fits info modified ...'\
+                    .format(fullname, datetime.now()))
+            
+            elif fullname[-4:].lower() == ".fit" \
+                or fullname[-4:].lower() == "fits" : 
+                os.rename(fullname, '{0}{1}'.format(new_foldername, new_filename))
+                astro_utilities.write_log(log_file, \
+                    '{0} is moved to {1}{2}'.format(fullname, new_foldername, new_filename))
+                fits.setval('{0}{1}'.format(new_foldername, new_filename), \
+                            'NOTES', value='modified by guitar79@naver.com')
+                    
+                hdul = fits.open("{0}{1}".format(new_foldername, new_filename))
+                print("hdul[0].header.tostring: {}".format(hdul[0].header.tostring))
+                fits_info1 = hdul[0].header.tostring()
+                fits_info = fits_info1.replace("'", "'\'")
+                print("fits_info: {}".format(fits_info))
+                print("*"*60)
+                astro_utilities.write_log(log_file, \
+                    '{1} ::: {0} fits info modified ...'\
+                    .format(fullname, datetime.now()))
+                    
+            
+                                 
         except Exception as err :
             print("X"*60)
             astro_utilities.write_log(err_log_file, \
                      '{2} ::: {0} with move {1} '.format(err, fullname, datetime.now()))
     
-                
+'''
 #############################################################################
 #############################################################################
 #############################################################################
@@ -129,3 +157,4 @@ for i in range(4) :
         if len(os.listdir(fullname)) == 0 :
             shutil.rmtree(r"{}".format(fullname)) # Delete..
             print ("rmtree {}\n".format(fullname))
+'''
