@@ -56,6 +56,18 @@ for fullname in fullnames[:]:
         
         try :
             print ("Starting...   fullname: {}".format(fullname))
+            fits.setval('{}'.format(fullname), \
+                            'NOTES', value='modified by guitar79@naver.com')
+            hdul = fits.open("{}".format(fullname))
+            print("hdul[0].header.tostring: {}".format(hdul[0].header.tostring))
+            fits_info1 = hdul[0].header.tostring()
+            fits_info = fits_info1.replace("'", "'\'")
+            print("fits_info: {}".format(fits_info))
+            print("*"*60)
+            astro_utilities.write_log(log_file, \
+                '{1} ::: {0} fits info modified ...'\
+                .format(fullname, datetime.now()))
+                
             new_filename = astro_utilities.get_new_filename(fullname)
             new_foldername = astro_utilities.get_new_foldername(new_filename)
             print ("new_filename: {}".format(new_filename))
@@ -77,21 +89,6 @@ for fullname in fullnames[:]:
                     os.rename(fullname, '{0}{1}'.format(new_foldername, new_filename))
                     astro_utilities.write_log(log_file, \
                              '{0} is moved to {1}{2}'.format(fullname, new_foldername, new_filename))
-                    fits.setval('{0}{1}'.format(new_foldername, new_filename), \
-                            'NOTES', value='modified by guitar79@naver.com')
-                    #fits.setval('{0}{1}'.format(new_foldername, new_filename), \
-                    #        'observer', value='Kiehyun Park')
-                    
-                    hdul = fits.open("{0}{1}".format(new_foldername, new_filename))
-                    
-                    print("hdul[0].header.tostring: {}".format(hdul[0].header.tostring))
-                    fits_info1 = hdul[0].header.tostring()
-                    fits_info = fits_info1.replace("'", "'\'")
-                    print("fits_info: {}".format(fits_info))
-                    print("*"*60)
-                    astro_utilities.write_log(log_file, \
-                         '{1} ::: {0} fits info modified ...'\
-                             .format(fullname, datetime.now()))
                     
             elif new_filename[-8:].lower() == "_wcs.fit" : 
                 if os.path.exists('{0}{1}_-.fit'.format(new_foldername, new_filename[:-8])):
@@ -100,45 +97,18 @@ for fullname in fullnames[:]:
                 os.rename(fullname, '{0}{1}'.format(new_foldername, new_filename))
                 astro_utilities.write_log(log_file, \
                     '{0} is moved to {1}{2}'.format(fullname, new_foldername, new_filename))
-                fits.setval('{0}{1}'.format(new_foldername, new_filename), \
-                            'NOTES', value='modified by guitar79@naver.com')
-                    
-                hdul = fits.open("{0}{1}".format(new_foldername, new_filename))
-                print("hdul[0].header.tostring: {}".format(hdul[0].header.tostring))
-                fits_info1 = hdul[0].header.tostring()
-                fits_info = fits_info1.replace("'", "'\'")
-                print("fits_info: {}".format(fits_info))
-                print("*"*60)
-                astro_utilities.write_log(log_file, \
-                    '{1} ::: {0} fits info modified ...'\
-                    .format(fullname, datetime.now()))
             
             elif fullname[-4:].lower() == ".fit" \
                 or fullname[-4:].lower() == "fits" : 
                 os.rename(fullname, '{0}{1}'.format(new_foldername, new_filename))
                 astro_utilities.write_log(log_file, \
                     '{0} is moved to {1}{2}'.format(fullname, new_foldername, new_filename))
-                fits.setval('{0}{1}'.format(new_foldername, new_filename), \
-                            'NOTES', value='modified by guitar79@naver.com')
-                    
-                hdul = fits.open("{0}{1}".format(new_foldername, new_filename))
-                print("hdul[0].header.tostring: {}".format(hdul[0].header.tostring))
-                fits_info1 = hdul[0].header.tostring()
-                fits_info = fits_info1.replace("'", "'\'")
-                print("fits_info: {}".format(fits_info))
-                print("*"*60)
-                astro_utilities.write_log(log_file, \
-                    '{1} ::: {0} fits info modified ...'\
-                    .format(fullname, datetime.now()))
-                    
-            
                                  
         except Exception as err :
             print("X"*60)
             astro_utilities.write_log(err_log_file, \
                      '{2} ::: {0} with move {1} '.format(err, fullname, datetime.now()))
     
-'''
 #############################################################################
 #############################################################################
 #############################################################################
@@ -157,4 +127,3 @@ for i in range(4) :
         if len(os.listdir(fullname)) == 0 :
             shutil.rmtree(r"{}".format(fullname)) # Delete..
             print ("rmtree {}\n".format(fullname))
-'''
