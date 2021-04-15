@@ -72,15 +72,15 @@ for fullname in fullnames[:]:
                 print ("move {}".format(fullname), "{}{}".format(target_duplicate_files_dir, new_filename))
             
             if new_filename[-8:].lower() == "_wcs.fit" \
-                and os.path.exists('{0}{1}_-.fit'.format(new_foldername, new_filename[-8:])):
-                shutil.move(r'{0}{1}_-.fit'.format(new_foldername, new_filename[-8:]), \
-                            r"{0}{1}_-.fit".format(target_duplicate_files_dir, new_filename[-8:]))
+                and os.path.exists('{0}{1}_-.fit'.format(new_foldername, new_filename[:-8])):
+                shutil.move(r'{0}{1}_-.fit'.format(new_foldername, new_filename[:-8]), \
+                            r"{0}{1}_-.fit".format(target_duplicate_files_dir, new_filename[:-8]))
                 os.rename(fullname, '{0}{1}'.format(new_foldername, new_filename))
                 astro_utilities.write_log(log_file, 
                      '{0}{1}_-.fit is move to already exist...'.format(new_foldername, new_filename))
                     
             elif new_filename[-6:].lower() == "_-.fit" \
-                and os.path.exists('{0}{1}_wcs.fit'.format(new_foldername, new_filename[-6:])):
+                and os.path.exists('{0}{1}_wcs.fit'.format(new_foldername, new_filename[:-6])):
                 astro_utilities.write_log(log_file, 
                      '{0}{1}_wcs.fit is already exist...'.format(new_foldername, new_filename))
                 shutil.move(r"{}".format(fullname), r"{}{}".format(target_duplicate_files_dir, new_filename))
