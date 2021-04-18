@@ -14,11 +14,6 @@ if add_log == True :
     log_file = 'astro_Python.log'
     err_log_file = 'astro_Python_err.log'
 
-master_file_dir_name = 'master_file_Python/'
-processing_dir_name = 'processing_Python/'
-integration_dir_name = 'integration_Python/'
-alignment_dir_name = 'alignment_Python/'
-
 c_method = 'median'    
 
 base_dir = "../CCD_new_files"
