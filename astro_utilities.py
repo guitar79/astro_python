@@ -272,7 +272,7 @@ def get_new_foldername_from_filename(filename):
         obs_LST = obs_LST - timedelta(days = 1)
     filename_el[3] = obs_LST.strftime('%Y-%m-%d-%H-%M-%S')
     if filename_el[1] == 'Bias':
-        new_foldername = '{6}_{8}bin/Cal/-_{3}_-_{1}_-_{4}_-_{6}_-_{8}bin/'\
+        new_foldername = '{6}_{8}/Cal/-_{3}_-_{1}_-_{4}_-_{6}_-_{8}/'\
         .format(filename_el[0],
         filename_el[1],
         filename_el[2],
@@ -283,7 +283,7 @@ def get_new_foldername_from_filename(filename):
         filename_el[7],
         filename_el[8])
     elif filename_el[1] == 'Dark' :
-        new_foldername = '{6}_{8}bin/Cal/-_{3}_-_{1}_-_{4}_-_{6}_-_{8}bin/'\
+        new_foldername = '{6}_{8}/Cal/-_{3}_-_{1}_-_{4}_-_{6}_-_{8}/'\
         .format(filename_el[0],
         filename_el[1],
         filename_el[2],
@@ -294,7 +294,7 @@ def get_new_foldername_from_filename(filename):
         filename_el[7],
         filename_el[8])
     elif filename_el[1] == 'Flat' :
-        new_foldername = '{6}_{8}bin/Cal_{5}/-_{3}_-_{1}_-_{5}_{6}_-_{8}bin/'\
+        new_foldername = '{6}_{8}/Cal_{5}/-_{3}_-_{1}_-_{5}_{6}_-_{8}/'\
         .format(filename_el[0],
         filename_el[1],
         filename_el[2],
@@ -305,7 +305,7 @@ def get_new_foldername_from_filename(filename):
         filename_el[7],
         filename_el[8])
     else : 
-        new_foldername = '{6}_{8}bin/Light_{5}/{0}_{1}_-_{3}_-_{5}_{6}_-_{8}bin/'\
+        new_foldername = '{6}_{8}/Light_{5}/{0}_{1}_-_{3}_-_{5}_{6}_-_{8}/'\
         .format(filename_el[0],
         filename_el[1],
         filename_el[2],
