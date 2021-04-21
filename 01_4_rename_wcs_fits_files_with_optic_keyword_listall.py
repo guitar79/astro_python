@@ -66,10 +66,12 @@ for fullname in fullnames[:]:
             print("*"*60)
             astro_utilities.write_log(log_file, \
                 '{1} ::: {0} fits info modified ...'\
-                .format(fullname, datetime.now()))
-                
+                .format(fullname, datetime.now()))                
             new_filename = astro_utilities.get_new_filename(fullname)
-            new_foldername = astro_utilities.get_new_foldername(new_filename)
+            #new_foldername = astro_utilities.get_new_foldername(new_filename)
+            #if new_filename[-4:] ==".fits" :
+            new_foldername = astro_utilities.get_new_foldername_from_filename(new_filename)
+            
             print ("new_filename: {}".format(new_filename))
             new_foldername = "{}{}".format(destination_base_dir_name, new_foldername)
             print ("new_foldername: {}".format(new_foldername))

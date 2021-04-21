@@ -259,6 +259,68 @@ def get_new_filename(fullname, **kargs):
     return new_filename
 
 
+def get_new_foldername_from_filename(filename):
+    log_file = 'get_new_foldername.log'
+    print('Starting get_new_foldername ...\n{0}'.format(filename))
+    
+    filename_el = filename[:-4].split("_")
+    from datetime import datetime, timedelta
+    timez = 9
+    obs_UT = datetime.strptime(filename_el[3], '%Y-%m-%d-%H-%M-%S')
+    obs_LST = obs_UT + timedelta(hours = timez)
+    if obs_LST.hour < 12 :
+        obs_LST = obs_LST - timedelta(days = 1)
+    filename_el[3] = obs_LST.strftime('%Y-%m-%d-%H-%M-%S')
+    if filename_el[1] == 'Bias':
+        new_foldername = '{6}_{8}bin/Cal/-_{3}_-_{1}_-_{4}_-_{6}_-_{8}bin/'\
+        .format(filename_el[0],
+        filename_el[1],
+        filename_el[2],
+        filename_el[3][:10],
+        filename_el[4],
+        filename_el[5],
+        filename_el[6],
+        filename_el[7],
+        filename_el[8])
+    elif filename_el[1] == 'Dark' :
+        new_foldername = '{6}_{8}bin/Cal/-_{3}_-_{1}_-_{4}_-_{6}_-_{8}bin/'\
+        .format(filename_el[0],
+        filename_el[1],
+        filename_el[2],
+        filename_el[3][:10],
+        filename_el[4],
+        filename_el[5],
+        filename_el[6],
+        filename_el[7],
+        filename_el[8])
+    elif filename_el[1] == 'Flat' :
+        new_foldername = '{6}_{8}bin/Cal_{5}/-_{3}_-_{1}_-_{5}_{6}_-_{8}bin/'\
+        .format(filename_el[0],
+        filename_el[1],
+        filename_el[2],
+        filename_el[3][:10],
+        filename_el[4],
+        filename_el[5],
+        filename_el[6],
+        filename_el[7],
+        filename_el[8])
+    else : 
+        new_foldername = '{6}_{8}bin/Light_{5}/{0}_{1}_-_{3}_-_{5}_{6}_-_{8}bin/'\
+        .format(filename_el[0],
+        filename_el[1],
+        filename_el[2],
+        filename_el[3][:10],
+        filename_el[4],
+        filename_el[5],
+        filename_el[6],
+        filename_el[7],
+        filename_el[8])
+    write_log(log_file, 
+                '{1} ::: \nNew foldername is {0} ...'\
+                .format(new_foldername, datetime.now()))    
+    return new_foldername
+
+
 def get_new_foldername(filename):
     log_file = 'get_new_foldername.log'
     print('Starting get_new_foldername ...\n{0}'.format(filename))
