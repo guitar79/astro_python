@@ -110,34 +110,17 @@ def get_new_filename(fullname, **kargs):
    
     if not 'OBJECT' in hdul[0].header : 
         object_name = '-'
-    elif 'America' in hdul[0].header['OBJECT'] : 
-        object_name = 'NGC7000'
-    elif 'Ta4r4sgc2244' in hdul[0].header['OBJECT'] : 
-        object_name = 'NGC2244'
-    elif 'Rosette' in hdul[0].header['OBJECT'] : 
-        object_name = 'NGC2244'
-    elif hdul[0].header['OBJECT'] =='Macaran' : 
-        object_name = 'Macarian' 
-    elif hdul[0].header['OBJECT'] =='5c1848' : 
-        object_name = 'IC1848' 
-    elif 'NGC1 ' in hdul[0].header['OBJECT'] : 
-        object_name = 'NGC1443' 
-    elif 'dark ' in hdul[0].header['OBJECT'] : 
+    elif 'dark ' in hdul[0].header['OBJECT'].lower() : 
         image_type = 'Dark'
         filter_name = '-'
         object_name = '-'
         optic = '-'
-    elif 'bias ' in hdul[0].header['OBJECT'] : 
+    elif 'bias ' in hdul[0].header['OBJECT'].lower() : 
         image_type = 'Bias'
         filter_name = '-'
         object_name = '-'        
         optic = '-'
-    elif 'Bias ' in hdul[0].header['OBJECT'] : 
-        image_type = 'Bias'
-        filter_name = '-'
-        object_name = '-'        
-        optic = '-'
-    elif 'flat ' in hdul[0].header['OBJECT'] : 
+    elif 'flat ' in hdul[0].header['OBJECT'].lower() : 
         image_type = 'Flat'
         object_name = '-'
     elif hdul[0].header['OBJECT'] =='' : 
@@ -221,22 +204,14 @@ def get_new_filename(fullname, **kargs):
         wcs = "wcs"
     
     object_name = object_name.replace('_', '-')
-    object_name = object_name.replace('ngc', 'NGC')
-    object_name = object_name.replace('ic', 'IC')
-    object_name = object_name.replace('NGCC', 'NGC')
-    object_name = object_name.replace('sadr', 'SADR')
-    object_name = object_name.replace('Sadr', 'SADR')
-    object_name = object_name.replace('m27', 'M27')
-    object_name = object_name.replace('m57', 'M57')
-    object_name = object_name.replace('59M60', 'M59M60')
-    object_name = object_name.replace('NGC2359-', 'NGC2359')
-    object_name = object_name.replace('5c1848', 'IC1848')
     object_name = object_name.replace('bias', '-')
     object_name = object_name.replace('Bias', '-')
     object_name = object_name.replace('dark', '-')
     object_name = object_name.replace('Dark', '-')
     object_name = object_name.replace('flat', '-')
     object_name = object_name.replace('Flat', '-')
+    object_name = object_name.replace('NGC', 'N')
+    object_name = object_name.replace('ngc', 'N')
     
     if not 'OPTIC' in hdul[0].header : 
         optic = 'OPTIC'
