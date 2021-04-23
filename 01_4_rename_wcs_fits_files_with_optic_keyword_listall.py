@@ -27,7 +27,7 @@ destination_base_dir_name = "../CCD_obs_raw/"
 #solved_base_dir_name = "../CCD_obs_solved/"
 target_duplicate_files_dir = "../CCD_duplicate_files/"
 base_dir = "../CCD_new_files/"
-#base_dir = "../CCD_wcs_one/"
+base_dir = "../CCD_wcs_one/"
 
 if not os.path.exists('{0}'.format(target_duplicate_files_dir)):
     os.makedirs('{0}'.format(target_duplicate_files_dir))
@@ -96,6 +96,10 @@ for fullname in fullnames[:]:
                 if os.path.exists('{0}{1}_-.fit'.format(new_foldername, new_filename[:-8])):
                     shutil.move(r'{0}{1}_-.fit'.format(new_foldername, new_filename[:-8]), \
                                 r"{0}{1}_-.fit".format(target_duplicate_files_dir, new_filename[:-8]))
+                if os.path.exists('{0}{1}_wcs.fit'.format(new_foldername, new_filename[:-8])):
+                    shutil.move(r'{0}{1}_wcs.fit'.format(new_foldername, new_filename[:-8]), \
+                                r"{0}{1}_wcs.fit".format(target_duplicate_files_dir, new_filename[:-8]))
+
                 os.rename(fullname, '{0}{1}'.format(new_foldername, new_filename))
                 astro_utilities.write_log(log_file, \
                     '{0} is moved to {1}{2}'.format(fullname, new_foldername, new_filename))

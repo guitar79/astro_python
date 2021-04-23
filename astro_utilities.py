@@ -265,7 +265,10 @@ def get_new_foldername_from_filename(filename):
     filename_el = filename[:-4].split("_")
     from datetime import datetime, timedelta
     timez = 9
-    obs_UT = datetime.strptime(filename_el[3], '%Y-%m-%d-%H-%M-%S')
+    if int(filename_el[3][17:19])>=60 :
+        obs_UT = datetime.strptime("{}59".format(filename_el[3][:17]), '%Y-%m-%d-%H-%M-%S')
+    else:
+         obs_UT = datetime.strptime(filename_el[3], '%Y-%m-%d-%H-%M-%S')
     obs_LST = obs_UT + timedelta(hours = timez)
     if obs_LST.hour < 12 :
         obs_LST = obs_LST - timedelta(days = 1)

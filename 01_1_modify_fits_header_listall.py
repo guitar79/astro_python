@@ -28,7 +28,7 @@ for fullname in fullnames[:] :
         print('Starting......\n{0} ...'.format(fullname))
         fullname_el = fullname.split('/')
         foldername_el = fullname_el[-2].split('_')
-        object_name = foldername_el[1]
+        object_name = foldername_el[0]
         optic_name = foldername_el[5]
         #../
         #NEW-fits/
