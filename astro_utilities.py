@@ -204,6 +204,8 @@ def get_new_filename(fullname, **kargs):
         wcs = "wcs"
     
     object_name = object_name.replace('_', '-')
+    object_name = object_name.replace('.', '-')
+    object_name = object_name.replace(':', '-')
     object_name = object_name.replace('bias', '-')
     object_name = object_name.replace('Bias', '-')
     object_name = object_name.replace('dark', '-')
