@@ -156,9 +156,8 @@ def get_new_filename(fullname, **kargs):
             object_name = hdul[0].header['OBJECT']
         else:
             object_name = "-"
-    elif hdul[0].header['IMAGETYP'][0:1] == 'B' \
-        or hdul[0].header['IMAGETYP'][0:1] == 'b' \
-        or hdul[0].header['IMAGETYP'][0:1] == 'z':
+    elif hdul[0].header['IMAGETYP'][:1].lower() == 'b' \
+        or hdul[0].header['IMAGETYP'][0:1].lower() == 'z':
         image_type = 'Bias'
         filter_name = '-'
         object_name = '-'
