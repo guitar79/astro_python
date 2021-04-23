@@ -95,7 +95,7 @@ def get_new_filename(fullname, **kargs):
     if 'TIME-OBS' in hdul[0].header : 
         obs_date  = hdul[0].header['DATE-OBS'][:10]+'-'+hdul[0].header['TIME-OBS']
     elif 'DATE-OBS' in hdul[0].header :
-        obs_date = hdul[0].header['DATE-OBS']
+        obs_date = hdul[0].header['DATE-OBS'][:19]
     else :
         obs_date = "No-obsdate"
     obs_date = obs_date.replace("T", "-")
