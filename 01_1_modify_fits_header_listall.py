@@ -30,15 +30,11 @@ for fullname in fullnames[:] :
         foldername_el = fullname_el[-2].split('_')
         object_name = foldername_el[0]
         optic_name = foldername_el[5]
-        #../
-        #NEW-fits/
-        #FSQ106-x0.73/
-        #-_Dark_-_-_-_-_STF-8300M_-_1x1bin/
-        #-_Dark_-_2020-03-25_120sec_-_STF-8300M_-_1x1bin/
-        #-_Dark_-_2020-03-25-12-35-58_120sec_FSQ106-x0.73_STF-8300M_-19C_1x1bin.fit
+
     
         try :
-            with fits.open('{0}'.format(fullname), mode="append") as hdul :
+            #with fits.open('{0}'.format(fullname), mode="append") as hdul :
+            with fits.open('{0}'.format(fullname), mode="update") as hdul :
                 if not 'OPTIC' in hdul[0].header :
                     hdul[0].header.append('OPTIC', 
                                        '{0}'.format(optic_name), 
@@ -46,7 +42,6 @@ for fullname in fullnames[:] :
                     astro_utilities.write_log(log_file, 
                         '{1} ::: OPTIC information is appended at {0}...'\
                         .format(fullname, datetime.now()))
-            with fits.open('{0}'.format(fullname), mode="append") as hdul :
                 if not 'OBJECT' in hdul[0].header :
                     hdul[0].header.append('OBJECT', 
                                        '{0}'.format(object_name), 
@@ -54,7 +49,7 @@ for fullname in fullnames[:] :
                     astro_utilities.write_log(log_file, 
                         '{1} ::: OPTIC information is appended at {0}...'\
                         .format(fullname, datetime.now()))
-            with fits.open('{0}'.format(fullname), mode="update") as hdul :
+            
                 # Change something in hdul.
                 if not hdul[0].header['OPTIC'] : 
                     hdul[0].header['OPTIC'] = '{0}'.format(optic_name)
