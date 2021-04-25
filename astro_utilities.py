@@ -78,11 +78,11 @@ def get_new_filename(fullname, **kargs):
     elif  'qsi' in hdul[0].header['INSTRUME'].lower() :     
         instrument = 'QSI683ws'
     elif  'st-8300' in hdul[0].header['INSTRUME'].lower() :     
-        instrument = 'ST-8300'
+        instrument = 'ST-8300M'
     elif  'stf-8300' in hdul[0].header['INSTRUME'].lower() :     
-        instrument = 'STF-8300'
+        instrument = 'STF-8300M'
     elif  'stl-11000' in hdul[0].header['INSTRUME'].lower() :     
-        instrument = 'STL-11000'
+        instrument = 'STL-11000M'
     else :
         instrument = hdul[0].header['INSTRUME']
     instrument = instrument.replace(" ","+")
@@ -223,7 +223,7 @@ def get_new_filename(fullname, **kargs):
     object_name = object_name.replace('_', '-')
     object_name = object_name.replace(':', '-')
     object_name = object_name.replace('.', '-')
-    object_name = object_name.replace(' ', '-')
+    object_name = object_name.replace(' ', '')
     object_name = object_name.replace('NGC', 'N')
     object_name = object_name.replace('ngc', 'N')
     object_name = object_name.replace('bias', '-')
