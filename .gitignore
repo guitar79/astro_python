@@ -10,3 +10,5 @@ get_new_foldername.log
 *.bak
 *.xml
 *.pyc
+__pycache__/astro_utilities.cpython-38.pyc
+*.pyc
